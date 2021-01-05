@@ -1,2 +1,0 @@
-# gridTool
-Created with CodeSandbox

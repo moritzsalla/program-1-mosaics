@@ -1,0 +1,28 @@
+$spacing: 1rem;
+
+body {
+    background: black;
+    padding: 0px;
+    margin: $spacing * 2;
+}
+
+svg {
+    font-family: 'Monument Grotesk', 'Times New Roman', Times, serif;
+    border: none;
+    background: none;
+    margin: 0;
+
+    *:hover {
+        opacity: 0;
+    }
+}
+
+div.window {
+    position: fixed;
+    top: $spacing;
+    right: $spacing;
+
+    div.item {
+        padding-bottom: $spacing;
+    }
+}

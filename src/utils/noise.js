@@ -87,3 +87,42 @@ export function noise(x, y = 0, z = 0) {
   }
   return r;
 }
+
+export function noiseSeed(seed) {
+  // Linear Congruential Generator
+  // Variant of a Lehman Generator
+  const lcg = (() => {
+    // Set to values from http://en.wikipedia.org/wiki/Numerical_Recipes
+    // m is basically chosen to be large (as it is the max period)
+    // and for its relationships to a and c
+    const m = 4294967296;
+    // a - 1 should be divisible by m's prime factors
+    const a = 1664525;
+    // c and m should be co-prime
+    const c = 1013904223;
+    let seed, z;
+    return {
+      setSeed(val) {
+        // pick a random seed if val is undefined or null
+        // the >>> 0 casts the seed to an unsigned 32-bit integer
+        z = seed = (val == null ? Math.random() * m : val) >>> 0;
+      },
+      getSeed() {
+        return seed;
+      },
+      rand() {
+        // define the recurrence relationship
+        z = (a * z + c) % m;
+        // return a float in [0, 1)
+        // if z = m then z / m = 0 therefore (z % m) / m < 1 always
+        return z / m;
+      },
+    };
+  })();
+
+  lcg.setSeed(seed);
+  perlin = new Array(PERLIN_SIZE + 1);
+  for (let i = 0; i < PERLIN_SIZE + 1; i++) {
+    perlin[i] = lcg.rand();
+  }
+}
