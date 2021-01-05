@@ -50,23 +50,13 @@ function render() {
     svg.setAttribute('viewBox', `0 0 ${WIDTH + 2} ${HEIGHT + 2}`);
 
     for (let x = 1; x < WIDTH; x += WIDTH / Number(resolution.value) / Number(xOffset.value)) {
-        for (
-            let y = 1;
-            y < HEIGHT;
-            y += HEIGHT / Number(resolution.value) / Number(yOffset.value)
-        ) {
+        for (let y = 1; y < HEIGHT; y += HEIGHT / Number(resolution.value) / Number(yOffset.value)) {
             if (rect.checked) {
                 let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
                 rect.setAttribute('x', String(x));
                 rect.setAttribute('y', String(y));
-                rect.setAttribute(
-                    'width',
-                    String(WIDTH / Number(resolution.value) / Number(xOffset.value))
-                );
-                rect.setAttribute(
-                    'height',
-                    String(HEIGHT / Number(resolution.value) / Number(yOffset.value))
-                );
+                rect.setAttribute('width', String(WIDTH / Number(resolution.value) / Number(xOffset.value)));
+                rect.setAttribute('height', String(HEIGHT / Number(resolution.value) / Number(yOffset.value)));
                 rect.setAttribute('stroke', strokeColor.value);
                 rect.setAttribute('stroke-width', strokeWidth.value);
                 rect.setAttribute('fill', calcFill(fill.value, x, y));
