@@ -1,8 +1,6 @@
-export function disableInput(elem: HTMLElement, disable: boolean) {
+export function disableInput(elem: HTMLInputElement, disable: boolean) {
     if (elem instanceof HTMLDocument || typeof disable !== 'boolean') {
-        throw new Error(
-            'Function expects a DOM element and boolean condition: disableInput(elem, disable)'
-        );
+        throw new Error('Function expects a DOM element and boolean condition: disableInput(elem, disable)');
     }
 
     elem.disabled = disable;
