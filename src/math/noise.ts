@@ -1,5 +1,3 @@
-// perlin noise function taken from p5.js
-
 const PERLIN_YWRAPB = 4;
 const PERLIN_YWRAP = 1 << PERLIN_YWRAPB;
 const PERLIN_ZWRAPB = 8;
@@ -12,6 +10,10 @@ let perlin_amp_falloff = 0.5;
 const scaled_cosine = (i) => 0.5 * (1.0 - Math.cos(i * Math.PI));
 
 let perlin;
+
+/**
+ * Perlin noise function taken from p5.js
+ */
 
 export function noise(x: number, y = 0, z = 0) {
     if (perlin == null) {

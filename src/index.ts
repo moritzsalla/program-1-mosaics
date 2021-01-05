@@ -34,8 +34,11 @@ zoom.value = '8';
 xOffset.value = '8';
 yOffset.value = '1';
 
-// --- this is the drawing loop
 let svg = document.getElementById('svgWrapper');
+
+/**
+ * Runs the drawing loop
+ */
 
 function render() {
     svg.innerHTML = ''; // important: clear parent elem on every draw

@@ -3,9 +3,17 @@ function componentToHex(c: number): string {
     return hex.length === 1 ? '0' + hex : hex;
 }
 
+/**
+ * Converts RGB to HEX values.
+ */
+
 export function rgbToHex(r: number, g: number, b: number) {
     return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
+
+/**
+ * Converts HEY to RGB values.
+ */
 
 export function hexToRgb(hex: string): object {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

@@ -1,3 +1,9 @@
+/**
+ * Downloads SVG elements
+ * @param svgEl Parent SVG element
+ * @param name File name
+ */
+
 export function save(svgEl: HTMLElement, name: string): void {
     svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 

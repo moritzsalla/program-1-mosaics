@@ -1,3 +1,9 @@
+/**
+ * Makes a HTML Element draggeable
+ * @param elemnt - Element that registers drag
+ * @param parent - Element to be moved
+ */
+
 export function dragElement(elmnt: HTMLElement, parent: HTMLElement): void {
     var pos1 = 0,
         pos2 = 0,
