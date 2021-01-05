@@ -18,11 +18,26 @@ svg {
 }
 
 div.window {
+    position: absolute;
+    user-select: none;
     position: fixed;
+    width: 250px;
+    overflow-y: scroll;
+    height: 600px;
     top: $spacing;
     right: $spacing;
 
     div.item {
-        padding-bottom: $spacing;
+      padding-bottom: $spacing;
     }
+}
+
+h5 {
+    font-size: 0.65rem;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+}
+
+p {
+    line-height: 1.35
 }

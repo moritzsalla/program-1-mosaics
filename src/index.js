@@ -1,13 +1,16 @@
 import '98.css/dist/98.css';
 import { hexToRgb, rgbToHex } from './utils/colorConverter';
+import { dragElement } from './utils/draggeable';
 import { map } from './utils/map';
 import { noise, noiseSeed } from './utils/noise';
 import { save } from './utils/saveSvg';
 
-noiseSeed(1); // comment out for random seed
+dragElement(document.querySelector('.title-bar'), document.querySelector('.window'));
 
 // --- get input elems
 let zoom = document.getElementById('zoom');
+let height = document.getElementById('height');
+let width = document.getElementById('width');
 let resolution = document.getElementById('resolution');
 let fill = document.getElementById('fill');
 let fn = document.getElementById('fn');
@@ -21,13 +24,17 @@ let yOffset = document.getElementById('yOffset');
 
 // --- set defaults
 fill.value = '#FF0000';
+height.value = 17;
+width.value = 145;
 fn.value = 'Math.sin(c*x*y) + 10';
 strokeColor.value = '#000000';
 strokeWidth.value = 0;
-resolution.value = 15;
+resolution.value = 12;
 zoom.value = 8;
 xOffset.value = 8;
 yOffset.value = 1;
+
+noiseSeed(1); // comment out for random seed
 
 // --- drawing loop
 let svg = document.getElementById('svgWrapper');
@@ -35,12 +42,10 @@ let svg = document.getElementById('svgWrapper');
 function render() {
     svg.innerHTML = ''; // clear parent elem on every draw
 
-    let WIDTH = 145 * zoom.value; // about 145x17 cm
-    let HEIGHT = 17 * zoom.value;
+    let WIDTH = width.value * zoom.value;
+    let HEIGHT = height.value * zoom.value;
     svg.style.width = WIDTH;
     svg.style.height = HEIGHT;
-    // svg.style.border = `${strokeWidth.value}px solid ${strokeColor.value}`;
-    // svg.style.background = strokeColor.value;
     svg.setAttribute('viewBox', `0 0 ${WIDTH + 2} ${HEIGHT + 2}`);
 
     for (let x = 1; x < WIDTH; x += WIDTH / resolution.value / xOffset.value) {
@@ -67,23 +72,6 @@ function render() {
                 circle.setAttribute('stroke-width', strokeWidth.value);
                 circle.setAttribute('fill', calcFill(fill.value, x, y));
                 svg.appendChild(circle);
-            }
-
-            if (type.checked) {
-                disableInput(strokeColor, true);
-                disableInput(strokeWidth, true);
-
-                strokeWidth.disabled = true;
-                strokeColor.style.opacity = 0.4;
-                strokeWidth.style.opacity = 0.4;
-
-                let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('font-size', Math.pow(zoom.value, 2) + 'rem');
-                text.setAttribute('x', x);
-                text.setAttribute('y', y);
-                text.innerHTML = 'a';
-                text.setAttribute('fill', calcFill(fill.value, x, y));
-                svg.appendChild(text);
             } else {
                 disableInput(strokeColor, false);
                 disableInput(strokeWidth, false);
@@ -116,6 +104,8 @@ render();
 
 // --- redraw on change
 resolution.addEventListener('input', () => render());
+height.addEventListener('input', () => render());
+width.addEventListener('input', () => render());
 fill.addEventListener('input', () => render());
 fn.addEventListener('input', () => render());
 strokeColor.addEventListener('input', () => render());
@@ -123,7 +113,6 @@ strokeWidth.addEventListener('input', () => render());
 zoom.addEventListener('input', () => render());
 circle.addEventListener('input', () => render());
 rect.addEventListener('input', () => render());
-type.addEventListener('input', () => render());
 xOffset.addEventListener('input', () => render());
 yOffset.addEventListener('input', () => render());
 

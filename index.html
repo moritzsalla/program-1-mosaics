@@ -7,45 +7,59 @@
         <link rel="stylesheet" href="src/styles.scss" />
     </head>
     <body>
-        <div class="window" style="width: 250px">
+        <div class="window">
             <div class="title-bar">
                 <div class="title-bar-text">Generative Grid Tool</div>
             </div>
-            <fieldset class="window-body">
+            <fieldset>
                 <div class="item">
-                    <p>Zoom</p>
-                    <input type="range" min="1" max="10" step="0.05" id="zoom" />
+                    <h5>Dimensions</h5>
+                    <field style="padding-right: 0.5rem">
+                        <label>Width:</label>
+                        <input type="number" min="1" max="250" id="width"
+                    /></field>
+                    <field>
+                        <label>Height:</label>
+                        <input type="number" min="1" max="250" id="height" />
+                    </field>
                 </div>
                 <div class="item">
-                    <p>Resolution</p>
+                    <h5>Zoom</h5>
+                    <input type="range" min="1" max="40" step="0.05" id="zoom" />
+                </div>
+                <div class="item">
+                    <h5>Resolution</h5>
                     <input type="range" min="1" max="20" step="1" id="resolution" />
                 </div>
                 <div class="item">
-                    <p>X Offset</p>
+                    <h5>X Offset</h5>
                     <input type="range" min="1" max="10" step="1" id="xOffset" />
                 </div>
                 <div class="item">
-                    <p>Y Offset</p>
+                    <h5>Y Offset</h5>
                     <input type="range" min="1" max="10" step="1" id="yOffset" />
                 </div>
                 <div class="item">
-                    <p>Base color</p>
+                    <h5>Base color</h5>
                     <input type="color" id="fill" />
                 </div>
                 <div class="item">
-                    <p>Stroke</p>
+                    <h5>Stroke</h5>
                     <input type="color" id="strokeColor" />
                     <br />
                     <br />
                     <input type="range" min="0" max="5" step="0.25" id="strokeWidth" />
                 </div>
                 <div class="item">
-                    <p>Function</p>
-                    <p>Use x, y, c, noise(), Math.sin(), Math.abs()…</p>
+                    <h5>Function</h5>
+                    <p>
+                        Use variables x, y, c, and standard javascript functions like Math.sin(),
+                        Math.abs()…
+                    </p>
                     <input type="text" id="fn" />
                 </div>
                 <div class="item">
-                    <p>Shape</p>
+                    <h5>Shape</h5>
                     <div class="field-row">
                         <input
                             id="radio5"
@@ -58,13 +72,10 @@
                     </div>
                     <div class="field-row">
                         <input id="radio4" type="radio" name="first-example" class="circle" />
-                        <label for="radio4">Circle</label>
-                    </div>
-                    <div class="field-row">
-                        <input id="radio6" type="radio" name="first-example" class="type" />
-                        <label for="radio6">Type</label>
+                        <label for="radio4">Ellipse</label>
                     </div>
                 </div>
+                <hr />
                 <div>
                     <button id="download">Download SVG</button>
                 </div>
