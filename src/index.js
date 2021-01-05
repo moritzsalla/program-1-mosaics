@@ -109,8 +109,8 @@ render();
 
 // --- redraw grid on input change
 resolution.addEventListener('input', () => render());
-height.addEventListener('input', () => render());
-width.addEventListener('input', () => render());
+height.addEventListener('change', () => render());
+width.addEventListener('change', () => render());
 fill.addEventListener('input', () => render());
 fn.addEventListener('input', () => render());
 strokeColor.addEventListener('input', () => render());
