@@ -13,7 +13,7 @@ const scaled_cosine = (i) => 0.5 * (1.0 - Math.cos(i * Math.PI));
 
 let perlin;
 
-export function noise(x, y = 0, z = 0) {
+export function noise(x: number, y = 0, z = 0) {
     if (perlin == null) {
         perlin = new Array(PERLIN_SIZE + 1);
         for (let i = 0; i < PERLIN_SIZE + 1; i++) {

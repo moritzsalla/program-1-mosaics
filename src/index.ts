@@ -10,31 +10,31 @@ import { save } from './utils/saveSvg';
 dragElement(document.querySelector('.title-bar'), document.querySelector('.window'));
 
 // --- get input elems
-let zoom = document.getElementById('zoom');
-let height = document.getElementById('height');
-let width = document.getElementById('width');
-let resolution = document.getElementById('resolution');
-let fill = document.getElementById('fill');
-let fn = document.getElementById('fn');
-let strokeColor = document.getElementById('strokeColor');
-let strokeWidth = document.getElementById('strokeWidth');
-let circle = document.querySelector('.circle');
-let rect = document.querySelector('.rect');
-let type = document.querySelector('.type');
-let xOffset = document.getElementById('xOffset');
-let yOffset = document.getElementById('yOffset');
+let zoom = document.getElementById('zoom') as HTMLInputElement;
+let height = document.getElementById('height') as HTMLInputElement;
+let width = document.getElementById('width') as HTMLInputElement;
+let resolution = document.getElementById('resolution') as HTMLInputElement;
+let fill = document.getElementById('fill') as HTMLInputElement;
+let fn = document.getElementById('fn') as HTMLInputElement;
+let strokeColor = document.getElementById('strokeColor') as HTMLInputElement;
+let strokeWidth = document.getElementById('strokeWidth') as HTMLInputElement;
+let circle = document.querySelector('.circle') as HTMLInputElement;
+let rect = document.querySelector('.rect') as HTMLInputElement;
+let type = document.querySelector('.type') as HTMLInputElement;
+let xOffset = document.getElementById('xOffset') as HTMLInputElement;
+let yOffset = document.getElementById('yOffset') as HTMLInputElement;
 
 // --- set input default vals
 fill.value = '#FF0000';
-height.value = 17;
-width.value = 145;
+height.value = '17';
+width.value = '145';
 fn.value = 'Math.sin(c*x*y) + 10';
 strokeColor.value = '#000000';
-strokeWidth.value = 0;
-resolution.value = 12;
-zoom.value = 8;
-xOffset.value = 8;
-yOffset.value = 1;
+strokeWidth.value = '0';
+resolution.value = '12';
+zoom.value = '8';
+xOffset.value = '8';
+yOffset.value = '1';
 
 // --- this is the drawing loop
 let svg = document.getElementById('svgWrapper');
@@ -42,21 +42,31 @@ let svg = document.getElementById('svgWrapper');
 function render() {
     svg.innerHTML = ''; // important: clear parent elem on every draw
 
-    let WIDTH = width.value * zoom.value;
-    let HEIGHT = height.value * zoom.value;
-    svg.style.width = WIDTH;
-    svg.style.height = HEIGHT;
+    let WIDTH = Number(width.value) * Number(zoom.value);
+    let HEIGHT = Number(height.value) * Number(zoom.value);
+    svg.style.width = String(WIDTH);
+    svg.style.height = String(HEIGHT);
 
     svg.setAttribute('viewBox', `0 0 ${WIDTH + 2} ${HEIGHT + 2}`);
 
-    for (let x = 1; x < WIDTH; x += WIDTH / resolution.value / xOffset.value) {
-        for (let y = 1; y < HEIGHT; y += HEIGHT / resolution.value / yOffset.value) {
+    for (let x = 1; x < WIDTH; x += WIDTH / Number(resolution.value) / Number(xOffset.value)) {
+        for (
+            let y = 1;
+            y < HEIGHT;
+            y += HEIGHT / Number(resolution.value) / Number(yOffset.value)
+        ) {
             if (rect.checked) {
                 let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                rect.setAttribute('x', x);
-                rect.setAttribute('y', y);
-                rect.setAttribute('width', WIDTH / resolution.value / xOffset.value);
-                rect.setAttribute('height', HEIGHT / resolution.value / yOffset.value);
+                rect.setAttribute('x', String(x));
+                rect.setAttribute('y', String(y));
+                rect.setAttribute(
+                    'width',
+                    String(WIDTH / Number(resolution.value) / Number(xOffset.value))
+                );
+                rect.setAttribute(
+                    'height',
+                    String(HEIGHT / Number(resolution.value) / Number(yOffset.value))
+                );
                 rect.setAttribute('stroke', strokeColor.value);
                 rect.setAttribute('stroke-width', strokeWidth.value);
                 rect.setAttribute('fill', calcFill(fill.value, x, y));
@@ -65,10 +75,10 @@ function render() {
 
             if (circle.checked) {
                 let circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                const radius = WIDTH / resolution.value / 2;
-                circle.setAttribute('cx', x + radius / xOffset.value + radius / 2);
-                circle.setAttribute('cy', y + radius / yOffset.value - radius / 2);
-                circle.setAttribute('r', radius);
+                const radius = WIDTH / Number(resolution.value) / 2;
+                circle.setAttribute('cx', String(x + radius / Number(xOffset.value) + radius / 2));
+                circle.setAttribute('cy', String(y + radius / Number(yOffset.value) - radius / 2));
+                circle.setAttribute('r', String(radius));
                 circle.setAttribute('stroke', strokeColor.value);
                 circle.setAttribute('stroke-width', strokeWidth.value);
                 circle.setAttribute('fill', calcFill(fill.value, x, y));

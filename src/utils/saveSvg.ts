@@ -1,4 +1,4 @@
-export function save(svgEl, name) {
+export function save(svgEl: HTMLElement, name: string): void {
     svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
     var svgData = svgEl.outerHTML;

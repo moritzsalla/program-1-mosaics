@@ -1,4 +1,4 @@
-export function dragElement(elmnt, parent) {
+export function dragElement(elmnt: HTMLElement, parent: HTMLElement): void {
     var pos1 = 0,
         pos2 = 0,
         pos3 = 0,
