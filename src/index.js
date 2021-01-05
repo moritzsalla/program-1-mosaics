@@ -21,12 +21,12 @@ let yOffset = document.getElementById('yOffset');
 
 // --- set defaults
 fill.value = '#FF0000';
-fn.value = 'x * y * c';
+fn.value = 'Math.sin(c*x*y) + 10';
 strokeColor.value = '#000000';
-strokeWidth.value = 0.75;
-resolution.value = 10;
-zoom.value = 2;
-xOffset.value = 1;
+strokeWidth.value = 0;
+resolution.value = 15;
+zoom.value = 8;
+xOffset.value = 8;
 yOffset.value = 1;
 
 // --- drawing loop
@@ -140,4 +140,5 @@ function disableInput(elem, disable) {
 
 // --- download button
 const downloadButton = document.getElementById('download');
-downloadButton.onclick = () => save(svg, 'gengrid-' + encodeURI(fn.value)); // encodes special chars
+// downloadButton.onclick = () => save(svg, 'gengrid-' + encodeURI(fn.value));
+downloadButton.onclick = () => save(svg, 'gengrid');
