@@ -1,10 +1,12 @@
 import '98.css/dist/98.css';
 import { hexToRgb, rgbToHex } from './utils/colorConverter';
+import { disableInput } from './utils/disableInput';
 import { dragElement } from './utils/draggeable';
 import { map } from './utils/map';
 import { noise, noiseSeed } from './utils/noise';
 import { save } from './utils/saveSvg';
 
+// --- make UI draggeable
 dragElement(document.querySelector('.title-bar'), document.querySelector('.window'));
 
 // --- get input elems
@@ -22,7 +24,7 @@ let type = document.querySelector('.type');
 let xOffset = document.getElementById('xOffset');
 let yOffset = document.getElementById('yOffset');
 
-// --- set defaults
+// --- set input default vals
 fill.value = '#FF0000';
 height.value = 17;
 width.value = 145;
@@ -34,18 +36,17 @@ zoom.value = 8;
 xOffset.value = 8;
 yOffset.value = 1;
 
-noiseSeed(1); // comment out for random seed
-
-// --- drawing loop
+// --- this is the drawing loop
 let svg = document.getElementById('svgWrapper');
 
 function render() {
-    svg.innerHTML = ''; // clear parent elem on every draw
+    svg.innerHTML = ''; // important: clear parent elem on every draw
 
     let WIDTH = width.value * zoom.value;
     let HEIGHT = height.value * zoom.value;
     svg.style.width = WIDTH;
     svg.style.height = HEIGHT;
+
     svg.setAttribute('viewBox', `0 0 ${WIDTH + 2} ${HEIGHT + 2}`);
 
     for (let x = 1; x < WIDTH; x += WIDTH / resolution.value / xOffset.value) {
@@ -65,8 +66,8 @@ function render() {
             if (circle.checked) {
                 let circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                 const radius = WIDTH / resolution.value / 2;
-                circle.setAttribute('cx', x + radius / xOffset.value);
-                circle.setAttribute('cy', y + radius / yOffset.value);
+                circle.setAttribute('cx', x + radius / xOffset.value + radius / 2);
+                circle.setAttribute('cy', y + radius / yOffset.value - radius / 2);
                 circle.setAttribute('r', radius);
                 circle.setAttribute('stroke', strokeColor.value);
                 circle.setAttribute('stroke-width', strokeWidth.value);
@@ -80,11 +81,13 @@ function render() {
     }
 }
 
-// do not remove x and y vars
+// do not remove x and y vars, they are needed for fn input
 function calcFill(c, x, y) {
+    noiseSeed(1); // comment out for random seed
+
     try {
         function calcNoise(c) {
-            c = noise(eval(fn.value)); // how do you expose functions in eval?
+            c = noise(eval(fn.value)); // to-do: how do you expose functions in eval?
             c = map(c, 0, 1, 0, 255);
             c = Math.round(c);
             return c;
@@ -95,14 +98,16 @@ function calcFill(c, x, y) {
         c.b = calcNoise(c.b);
         return rgbToHex(c.r, c.b, c.g);
     } catch {
-        throw new Error('Could not calculate fill');
+        throw new Error(
+            `Could not calculate noise from the given input variables: ${fn.value}. This is likely a user error.`
+        );
     }
 }
 
 // --- draw first frame
 render();
 
-// --- redraw on change
+// --- redraw grid on input change
 resolution.addEventListener('input', () => render());
 height.addEventListener('input', () => render());
 width.addEventListener('input', () => render());
@@ -116,18 +121,6 @@ rect.addEventListener('input', () => render());
 xOffset.addEventListener('input', () => render());
 yOffset.addEventListener('input', () => render());
 
-// --- helper
-function disableInput(elem, disable) {
-    if (elem instanceof HTMLDocument || typeof disable !== 'boolean') {
-        throw new Error(
-            'Function expects a DOM element and boolean condition: disableInput(elem, disable)'
-        );
-    }
-    elem.disabled = disable;
-    elem.style.opacity = disable ? 0.4 : 1;
-}
-
 // --- download button
 const downloadButton = document.getElementById('download');
-// downloadButton.onclick = () => save(svg, 'gengrid-' + encodeURI(fn.value));
 downloadButton.onclick = () => save(svg, 'gengrid');

@@ -1,7 +1,7 @@
 $spacing: 1rem;
 
 body {
-    background: black;
+    background: rgb(30,30,30);
     padding: 0px;
     margin: $spacing * 2;
 }
@@ -19,7 +19,6 @@ svg {
 
 div.window {
     position: absolute;
-    user-select: none;
     position: fixed;
     width: 250px;
     overflow-y: scroll;
