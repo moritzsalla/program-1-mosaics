@@ -1,13 +1,11 @@
 import '98.css/dist/98.css';
 import { calcFill } from './math/calcFill';
-import { disableInput } from './utils/disableInput';
+import { rgbToHex } from './utils/colorConverter';
 import { dragElement } from './utils/draggeable';
+import { ErrorUI } from './utils/errorUI';
 import { save } from './utils/saveSvg';
 
-// --- make UI draggeable
-dragElement(document.querySelector('.title-bar'), document.querySelector('.window'));
-
-// --- get input elems
+// --- inputs ---
 let zoom = document.getElementById('zoom') as HTMLInputElement;
 let height = document.getElementById('height') as HTMLInputElement;
 let width = document.getElementById('width') as HTMLInputElement;
@@ -18,23 +16,24 @@ let strokeColor = document.getElementById('strokeColor') as HTMLInputElement;
 let strokeWidth = document.getElementById('strokeWidth') as HTMLInputElement;
 let circle = document.querySelector('.circle') as HTMLInputElement;
 let rect = document.querySelector('.rect') as HTMLInputElement;
-let type = document.querySelector('.type') as HTMLInputElement;
 let xOffset = document.getElementById('xOffset') as HTMLInputElement;
 let yOffset = document.getElementById('yOffset') as HTMLInputElement;
 
-// --- set input default vals
+// --- default values ---
 fill.value = '#FF0000';
-height.value = '17';
-width.value = '145';
+height.value = String(Math.round(window.innerHeight * 0.1));
+width.value = String(Math.round(window.innerWidth * 0.1));
 fn.value = 'Math.sin(c*x*y) + 10';
 strokeColor.value = '#000000';
-strokeWidth.value = '0';
-resolution.value = '12';
+strokeWidth.value = '0.25';
+resolution.value = '10';
 zoom.value = '8';
-xOffset.value = '8';
+xOffset.value = '15';
 yOffset.value = '1';
 
 let svg = document.getElementById('svgWrapper');
+
+const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
 
 /**
  * Runs the drawing loop
@@ -42,6 +41,7 @@ let svg = document.getElementById('svgWrapper');
 
 function render() {
     svg.innerHTML = ''; // important: clear parent elem on every draw
+    errorUI.remove();
 
     let WIDTH = Number(width.value) * Number(zoom.value);
     let HEIGHT = Number(height.value) * Number(zoom.value);
@@ -60,7 +60,11 @@ function render() {
                 rect.setAttribute('height', String(HEIGHT / Number(resolution.value) / Number(yOffset.value)));
                 rect.setAttribute('stroke', strokeColor.value);
                 rect.setAttribute('stroke-width', strokeWidth.value);
-                rect.setAttribute('fill', calcFill(fill.value, x, y));
+                try {
+                    rect.setAttribute('fill', calcFill(fill.value, x, y));
+                } catch {
+                    errorUI.create('There is a mistake in your function. Try something else.');
+                }
                 svg.appendChild(rect);
             }
 
@@ -72,20 +76,21 @@ function render() {
                 circle.setAttribute('r', String(radius));
                 circle.setAttribute('stroke', strokeColor.value);
                 circle.setAttribute('stroke-width', strokeWidth.value);
-                circle.setAttribute('fill', calcFill(fill.value, x, y));
+                try {
+                    circle.setAttribute('fill', calcFill(fill.value, x, y));
+                } catch {
+                    errorUI.create('There is a mistake in your function. Try something else.');
+                }
                 svg.appendChild(circle);
-            } else {
-                disableInput(strokeColor, false);
-                disableInput(strokeWidth, false);
             }
         }
     }
 }
 
-// --- draw first frame
+// --- draw first frame ---
 render();
 
-// --- redraw grid on input change
+// --- redraw grid on input change ---
 resolution.addEventListener('input', () => render());
 height.addEventListener('change', () => render());
 width.addEventListener('change', () => render());
@@ -99,6 +104,19 @@ rect.addEventListener('input', () => render());
 xOffset.addEventListener('input', () => render());
 yOffset.addEventListener('input', () => render());
 
-// --- download button
+// --- set background color ---
+let bg = document.getElementById('bg') as HTMLInputElement;
+bg.value = rgbToHex(30, 30, 30);
+bg.addEventListener('input', () => setBGColor());
+setBGColor();
+
+function setBGColor() {
+    document.body.style.backgroundColor = bg.value;
+}
+
+// --- make UI draggeable ---
+dragElement(document.querySelector('.title-bar'), document.querySelector('.window'));
+
+// --- download button ---
 const downloadButton = document.getElementById('download');
 downloadButton.onclick = () => save(svg, 'gengrid');

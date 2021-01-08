@@ -1,7 +1,6 @@
 $spacing: 1rem;
 
 body {
-    background: rgb(30,30,30);
     padding: 0px;
     margin: $spacing * 2;
 }
@@ -11,32 +10,47 @@ svg {
     border: none;
     background: none;
     margin: 0;
-
-    *:hover {
-        opacity: 0;
-    }
 }
 
 div.window {
     position: absolute;
     position: fixed;
-    width: 250px;
+    width: 300px;
     overflow-y: scroll;
-    height: 600px;
+    height: 80vh;
     top: $spacing;
     right: $spacing;
 
-    div.item {
-      padding-bottom: $spacing;
+    div.title-bar {
+        cursor: grab;
     }
-}
 
-h5 {
-    font-size: 0.65rem;
-    margin-bottom: 10px;
-    letter-spacing: 0.05em;
-}
+    div.item {
+      padding-bottom: $spacing/2;
+    }
 
-p {
-    line-height: 1.35
+    h5, p {
+        font-size: 0.75rem;
+    }
+
+    h5 {
+        margin-bottom: 10px;
+        letter-spacing: 0.05em;
+    }
+
+    p {
+        line-height: 1.35
+    }
+
+    #fn {
+        width: 100%; 
+        font-size: 0.85rem;
+        padding: 1rem;
+        font-weight: 200;
+    }
+
+
+    hr {
+     margin: 1rem 0;   
+    }
 }

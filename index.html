@@ -3,80 +3,96 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Generative SVG Grid Tool</title>
         <link rel="stylesheet" href="src/styles.scss" />
     </head>
     <body>
         <div class="window">
             <div class="title-bar">
-                <div class="title-bar-text">Generative Grid Tool</div>
+                <div class="title-bar-text">Generative SVG Grid Tool</div>
             </div>
             <fieldset>
-                <p>See more: moritzsalla.info/grid-tool</p>
-                <div class="item">
-                    <h5>Dimensions</h5>
-                    <field style="padding-right: 0.5rem">
-                        <label>Width:</label>
-                        <input type="number" min="1" max="250" id="width"
-                    /></field>
-                    <field>
-                        <label>Height:</label>
-                        <input type="number" min="1" max="250" id="height" />
-                    </field>
-                </div>
-                <div class="item">
-                    <h5>Zoom</h5>
-                    <input type="range" min="1" max="40" step="0.05" id="zoom" />
-                </div>
-                <div class="item">
-                    <h5>Resolution</h5>
-                    <input type="range" min="1" max="20" step="1" id="resolution" />
-                </div>
-                <div class="item">
-                    <h5>Tile X Offset</h5>
-                    <input type="range" min="1" max="10" step="1" id="xOffset" />
-                </div>
-                <div class="item">
-                    <h5>Tile Y Offset</h5>
-                    <input type="range" min="1" max="10" step="1" id="yOffset" />
-                </div>
-                <div class="item">
-                    <h5>Base color</h5>
-                    <input type="color" id="fill" />
-                </div>
-                <div class="item">
-                    <h5>Stroke</h5>
-                    <label>Color:</label>
-                    <input type="color" id="strokeColor" />
+                <p>
+                    Generate SVG grids using perlin noise. All tiles are individual elements, also after you have
+                    downloaded them. You can further edit these in your vector program of choice.
+                    <br /><br />
+                    Start with smaller values–this tool can easily push your browser to the limit!
+                </p>
+                <p>
+                    Read more: <a href="https://moritzsalla.info/grid-tool">moritzsalla.info</a>
                     <br />
-                    <br />
-                    <label>Width:</label
-                    ><input type="range" min="0" max="5" step="0.25" id="strokeWidth" />
-                </div>
-                <div class="item">
-                    <h5>Function</h5>
-                    <p>
-                        Use variables x (x-coord), y (y-coord), c (base color), and standard
-                        javascript functions like Math.sin(), Math.abs()…
-                    </p>
-                    <input type="text" id="fn" />
-                </div>
+                    Code: <a href="https://github.com/moritzsalla/generative-grid-tool">Github Repo</a>
+                </p>
+                <hr />
                 <div class="item">
                     <h5>Shape</h5>
                     <div class="field-row">
-                        <input
-                            id="radio5"
-                            type="radio"
-                            name="first-example"
-                            class="rect"
-                            checked="checked"
-                        />
+                        <input id="radio5" type="radio" name="first-example" class="rect" checked="checked" />
                         <label for="radio5">Rectangle</label>
                     </div>
                     <div class="field-row">
                         <input id="radio4" type="radio" name="first-example" class="circle" />
                         <label for="radio4">Ellipse</label>
                     </div>
+                </div>
+                <hr />
+                <div class="item">
+                    <h5>Background</h5>
+                    <p>Not included in export</p>
+                    <input type="color" id="bg" />
+                </div>
+                <hr />
+                <div class="item">
+                    <h5>Dimensions</h5>
+                    <field style="padding-right: 0.5rem">
+                        <label>Width:</label>
+                        <input type="number" min="1" step="1" id="width"
+                    /></field>
+                    <br />
+                    <field>
+                        <label>Height:</label>
+                        <input type="number" min="1" step="1" id="height" />
+                    </field>
+                </div>
+                <hr />
+                <div class="item">
+                    <h5>Function</h5>
+                    <p>
+                        Use variables x (x-coord), y (y-coord), c (base color), and standard javascript functions like
+                        Math.sin(), Math.abs()…
+                    </p>
+                    <input type="text" id="fn" />
+                </div>
+                <hr />
+                <div class="item">
+                    <h5>Zoom</h5>
+                    <input type="range" min="1" max="100" step="0.05" id="zoom" />
+                </div>
+                <div class="item">
+                    <h5>Resolution</h5>
+                    <input type="range" min="1" max="100" step="1" id="resolution" />
+                </div>
+                <div class="item">
+                    <h5>Tile X Offset</h5>
+                    <input type="range" min="1" max="100" step="1" id="xOffset" />
+                </div>
+                <div class="item">
+                    <h5>Tile Y Offset</h5>
+                    <input type="range" min="1" max="100" step="1" id="yOffset" />
+                </div>
+                <hr />
+                <div class="item">
+                    <h5>Base color</h5>
+                    <input type="color" id="fill" />
+                </div>
+                <hr />
+                <div class="item">
+                    <h5>Stroke</h5>
+                    <label>Color:</label>
+                    <input type="color" id="strokeColor" />
+                    <br />
+                    <br />
+                    <label>Width:</label><input type="range" min="0" max="5" step="0.25" id="strokeWidth" />
                 </div>
                 <hr />
                 <div>
