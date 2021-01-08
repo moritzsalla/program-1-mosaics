@@ -1,6 +1,7 @@
 import '98.css/dist/98.css';
 import { calcFill } from './math/calcFill';
 import { rgbToHex } from './utils/colorConverter';
+import { disableInput } from './utils/disableInput';
 import { dragElement } from './utils/draggeable';
 import { ErrorUI } from './utils/errorUI';
 import { save } from './utils/saveSvg';
@@ -35,31 +36,6 @@ let svg = document.getElementById('svgWrapper');
 
 const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
 
-class SVG {
-    elem: SVGElement;
-    type: string;
-
-    constructor() {
-        this.elem = null;
-        this.type = null;
-    }
-
-    create(type: string) {
-        this.type = type;
-        this.elem = document.createElementNS('http://www.w3.org/2000/svg', type);
-    }
-
-    setCoords(x?: number, y?: number) {}
-
-    setSize(x?: number, y?: number) {}
-
-    setFill(val);
-
-    setStroke(val);
-
-    setColor(val);
-}
-
 /**
  * Runs the drawing loop
  */
@@ -77,12 +53,7 @@ function render() {
 
     for (let x = 1; x < WIDTH; x += WIDTH / Number(resolution.value) / Number(xOffset.value)) {
         for (let y = 1; y < HEIGHT; y += HEIGHT / Number(resolution.value) / Number(yOffset.value)) {
-            const elem = new SVG();
-
-            if (rect.checked) elem.create('rect');
-            if (circle.checked) elem.create('circle');
-
-            {
+            if (rect.checked) {
                 let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
                 rect.setAttribute('x', String(x));
                 rect.setAttribute('y', String(y));
@@ -112,6 +83,9 @@ function render() {
                     errorUI.create('There is a mistake in your function. Try something else.');
                 }
                 svg.appendChild(circle);
+            } else {
+                disableInput(strokeColor, false);
+                disableInput(strokeWidth, false);
             }
         }
     }
