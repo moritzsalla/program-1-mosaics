@@ -32,14 +32,10 @@ zoom.value = '8';
 xOffset.value = '15';
 yOffset.value = '1';
 
+let svg = document.getElementById('svg');
 const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
 
-/**
- * Runs the drawing loop
- */
-
 function render() {
-    let svg = document.getElementById('svgWrapper');
     svg.innerHTML = ''; // important: clear parent elem on every draw
     errorUI.remove();
 
@@ -118,6 +114,5 @@ function setBGColor() {
 dragElement(document.querySelector('.title-bar'), document.querySelector('.window'));
 
 // --- download button ---#
-let svg = document.getElementById('svgWrapper');
 const downloadButton = document.getElementById('download');
 downloadButton.onclick = () => save(svg, 'gengrid');
