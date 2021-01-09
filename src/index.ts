@@ -83,9 +83,6 @@ function render() {
                     errorUI.create('There is a mistake in your function. Try something else.');
                 }
                 svg.appendChild(circle);
-            } else {
-                disableInput(strokeColor, false);
-                disableInput(strokeWidth, false);
             }
         }
     }
