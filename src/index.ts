@@ -1,7 +1,6 @@
 import '98.css/dist/98.css';
 import { calcFill } from './math/calcFill';
 import { rgbToHex } from './utils/colorConverter';
-import { disableInput } from './utils/disableInput';
 import { dragElement } from './utils/draggeable';
 import { ErrorUI } from './utils/errorUI';
 import { save } from './utils/saveSvg';
@@ -32,7 +31,7 @@ zoom.value = '8';
 xOffset.value = '15';
 yOffset.value = '1';
 
-let svg = document.getElementById('svg');
+let svg = document.querySelector('svg#wrapper');
 const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
 
 function render() {
