@@ -1,5 +1,4 @@
 import '98.css/dist/98.css';
-
 import { calcFill } from './math/calcFill';
 import { rgbToHex } from './utils/colorConverter';
 import { disableInput } from './utils/disableInput';
@@ -42,7 +41,7 @@ const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
  */
 
 function render() {
-    svg.innerHTML = ''; // important: clear parent elem on every draw
+    // svg.innerHTML = ''; // important: clear parent elem on every draw
     errorUI.remove();
 
     let WIDTH = Number(width.value) * Number(zoom.value);
