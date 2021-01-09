@@ -1,19 +1,19 @@
 {
-  "name": "grid-tool-vanilla",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "develop": "parcel  index.html",
-    "build": "parcel build index.html"
-  },
-  "dependencies": {
-    "98.css": "^0.1.16",
-    "bootstrap": "^4.5.3",
-    "parcel-bundler": "^1.12.4"
-  },
-  "devDependencies": {
-    "sass": "^1.30.0",
-    "typescript": "^4.1.3"
-  }
+    "name": "grid-tool-vanilla",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "develop": "parcel index.html",
+        "build": "parcel build index.html"
+    },
+    "dependencies": {
+        "98.css": "^0.1.16",
+        "bootstrap": "^4.5.3",
+        "parcel-bundler": "^1.12.4"
+    },
+    "devDependencies": {
+        "sass": "^1.30.0",
+        "typescript": "^4.1.3"
+    }
 }
