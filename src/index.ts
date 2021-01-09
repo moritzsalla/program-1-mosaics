@@ -32,8 +32,6 @@ zoom.value = '8';
 xOffset.value = '15';
 yOffset.value = '1';
 
-let svg = document.getElementById('svgWrapper');
-
 const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
 
 /**
@@ -41,7 +39,8 @@ const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
  */
 
 function render() {
-    // svg.innerHTML = ''; // important: clear parent elem on every draw
+    let svg = document.getElementById('svgWrapper');
+    svg.innerHTML = ''; // important: clear parent elem on every draw
     errorUI.remove();
 
     let WIDTH = Number(width.value) * Number(zoom.value);
@@ -118,6 +117,7 @@ function setBGColor() {
 // --- make UI draggeable ---
 dragElement(document.querySelector('.title-bar'), document.querySelector('.window'));
 
-// --- download button ---
+// --- download button ---#
+let svg = document.getElementById('svgWrapper');
 const downloadButton = document.getElementById('download');
 downloadButton.onclick = () => save(svg, 'gengrid');
