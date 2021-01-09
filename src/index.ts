@@ -31,8 +31,10 @@ zoom.value = '8';
 xOffset.value = '15';
 yOffset.value = '1';
 
-let svg = document.querySelector('svg#wrapper');
 const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
+
+const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+document.body.appendChild(svg);
 
 function render() {
     svg.innerHTML = ''; // important: clear parent elem on every draw
