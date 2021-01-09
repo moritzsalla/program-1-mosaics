@@ -1,4 +1,5 @@
 import '98.css/dist/98.css';
+
 import { calcFill } from './math/calcFill';
 import { rgbToHex } from './utils/colorConverter';
 import { disableInput } from './utils/disableInput';
