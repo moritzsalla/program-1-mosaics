@@ -42,7 +42,9 @@ const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
  */
 
 function render() {
-    svg.innerHTML = ''; // important: clear parent elem on every draw
+    if (svg) {
+        svg.innerHTML = ''; // important: clear parent elem on every draw
+    }
     errorUI.remove();
 
     let WIDTH = Number(width.value) * Number(zoom.value);
