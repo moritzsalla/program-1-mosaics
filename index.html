@@ -25,18 +25,6 @@
                 </p>
                 <hr />
                 <div class="item">
-                    <h5>Shape</h5>
-                    <div class="field-row">
-                        <input id="radio5" type="radio" name="first-example" class="rect" checked="checked" />
-                        <label for="radio5">Rectangle</label>
-                    </div>
-                    <div class="field-row">
-                        <input id="radio4" type="radio" name="first-example" class="circle" />
-                        <label for="radio4">Ellipse</label>
-                    </div>
-                </div>
-                <hr />
-                <div class="item">
                     <h5>Background</h5>
                     <p>Not included in export</p>
                     <input type="color" id="bg" />
@@ -56,34 +44,50 @@
                 </div>
                 <hr />
                 <div class="item">
-                    <h5>Function</h5>
+                    <h5>Zoom</h5>
+                    <input type="range" min="1" max="100" id="zoom" />
+                </div>
+                <div class="item">
+                    <h5>Horizontal Resolution</h5>
+                    <input type="range" min="1" max="100" id="xOffset" />
+                </div>
+                <div class="item">
+                    <h5>Vertical Resolution</h5>
+                    <input type="range" min="1" max="100" id="yOffset" />
+                </div>
+                <hr />
+                <div class="item">
+                    <h5>Noise</h5>
+                    <field style="padding-right: 0.5rem">
+                        <label>Base color:</label>
+                        <input type="color" id="fill" />
+                    </field>
+                    <br />
+                    <br />
+                    <field style="padding-right: 0.5rem">
+                        <label>Seed:</label>
+                        <input type="number" min="0" step="1" id="seed"
+                    /></field>
+                    <br />
+                    <br />
+                    <field style="padding-right: 0.5rem">
+                        <label>Detail:</label>
+                        <input type="range" min="0" max="10" step="0.01" id="detail"
+                    /></field>
+                    <br />
+                    <br />
+                    <field style="padding-right: 0.5rem">
+                        <label>Falloff:</label>
+                        <input type="range" min="0" max="1" step="0.01" id="falloff"
+                    /></field>
+                    <br />
+                    <br />
+                    <h5>Custom Function</h5>
                     <p>
                         Use variables x (x-coord), y (y-coord), c (base color), and standard javascript functions like
                         Math.sin(), Math.abs()…
                     </p>
                     <input type="text" id="fn" />
-                </div>
-                <hr />
-                <div class="item">
-                    <h5>Zoom</h5>
-                    <input type="range" min="1" max="100" step="0.05" id="zoom" />
-                </div>
-                <div class="item">
-                    <h5>Resolution</h5>
-                    <input type="range" min="1" max="50" step="1" id="resolution" />
-                </div>
-                <div class="item">
-                    <h5>Tile X Offset</h5>
-                    <input type="range" min="1" max="50" step="1" id="xOffset" />
-                </div>
-                <div class="item">
-                    <h5>Tile Y Offset</h5>
-                    <input type="range" min="1" max="50" step="1" id="yOffset" />
-                </div>
-                <hr />
-                <div class="item">
-                    <h5>Base color</h5>
-                    <input type="color" id="fill" />
                 </div>
                 <hr />
                 <div class="item">

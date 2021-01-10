@@ -53,4 +53,8 @@ div.window {
     hr {
      margin: 1rem 0;   
     }
+
+    input[type="range"] {
+        cursor: grab;
+    }
 }

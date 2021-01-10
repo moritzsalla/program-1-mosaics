@@ -1,11 +1,9 @@
 import { hexToRgb, rgbToHex } from '../utils/colorConverter';
 import { map } from './map';
-import { noise, noiseSeed } from './noise';
+import { noise, seed, detail } from './simplexNoise';
 
 // do not remove x and y vars, they are needed for fn input
 export function calcFill(x: number, y: number, hex: string) {
-    noiseSeed(1); // comment out for random seed
-
     let newC = {
         r: calcNoise(x, y, hexToRgb(hex).r),
         g: calcNoise(x, y, hexToRgb(hex).g),
