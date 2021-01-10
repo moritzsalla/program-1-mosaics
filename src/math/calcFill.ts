@@ -16,7 +16,7 @@ export function calcFill(x: number, y: number, hex: string) {
 }
 
 function calcNoise(x: number, y: number, c: number) {
-    let newC = new Function('x', 'y', 'c', 'noise', 'bla', fn.value)(x, y, c, noise);
+    let newC = new Function('noise', 'x', 'y', 'c', `return noise(${fn.value})`)(noise, x, y, c);
     newC = map(newC, 0, 1, 0, 255);
     newC = Math.round(newC);
     return newC;
