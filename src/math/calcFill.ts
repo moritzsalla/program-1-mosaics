@@ -3,19 +3,21 @@ import { map } from './map';
 import { noise, noiseSeed } from './noise';
 
 // do not remove x and y vars, they are needed for fn input
-export function calcFill(c, x, y) {
+export function calcFill(x: number, y: number, hex: string) {
     noiseSeed(1); // comment out for random seed
 
-    function calcNoise(c) {
-        c = noise(eval(fn.value)); // to-do: how do you expose functions in eval?
-        c = map(c, 0, 1, 0, 255);
-        c = Math.round(c);
-        return c;
-    }
+    let newC = {
+        r: calcNoise(x, y, hexToRgb(hex).r),
+        g: calcNoise(x, y, hexToRgb(hex).g),
+        b: calcNoise(x, y, hexToRgb(hex).b),
+    };
 
-    c = hexToRgb(c);
-    c.r = calcNoise(c.r);
-    c.g = calcNoise(c.g);
-    c.b = calcNoise(c.b);
-    return rgbToHex(c.r, c.b, c.g);
+    return rgbToHex(newC.r, newC.b, newC.g);
+}
+
+function calcNoise(x: number, y: number, c: number) {
+    let newC = new Function('x', 'y', 'c', 'noise', 'bla', fn.value)(x, y, c, noise);
+    newC = map(newC, 0, 1, 0, 255);
+    newC = Math.round(newC);
+    return newC;
 }

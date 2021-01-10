@@ -15,7 +15,7 @@ export function rgbToHex(r: number, g: number, b: number) {
  * Converts HEY to RGB values.
  */
 
-export function hexToRgb(hex: string): object {
+export function hexToRgb(hex: string): { r: number; g: number; b: number } {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
         ? {

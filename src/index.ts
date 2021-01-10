@@ -20,10 +20,10 @@ let xOffset = document.getElementById('xOffset') as HTMLInputElement;
 let yOffset = document.getElementById('yOffset') as HTMLInputElement;
 
 // --- default values ---
-fill.value = '#FF0000';
+fill.value = '#FFFFFF';
 height.value = String(Math.round(window.innerHeight * 0.1));
 width.value = String(Math.round(window.innerWidth * 0.1));
-fn.value = 'Math.sin(c*x*y) + 10';
+fn.value = 'noise(Math.sin(c*x*y) + 10)';
 strokeColor.value = '#000000';
 strokeWidth.value = '0.25';
 resolution.value = '10';
@@ -57,11 +57,12 @@ function render() {
                 rect.setAttribute('height', String(HEIGHT / Number(resolution.value) / Number(yOffset.value)));
                 rect.setAttribute('stroke', strokeColor.value);
                 rect.setAttribute('stroke-width', strokeWidth.value);
-                try {
-                    rect.setAttribute('fill', calcFill(fill.value, x, y));
-                } catch {
-                    errorUI.create('There is a mistake in your function. Try something else.');
-                }
+                rect.setAttribute('fill', calcFill(x, y, fill.value));
+                // try {
+                //     rect.setAttribute('fill', calcFill(fill.value, x, y));
+                // } catch {
+                //     errorUI.create('There is a mistake in your function. Try something else.');
+                // }
                 svg.appendChild(rect);
             }
 
@@ -92,7 +93,7 @@ resolution.addEventListener('input', () => render());
 height.addEventListener('change', () => render());
 width.addEventListener('change', () => render());
 fill.addEventListener('input', () => render());
-fn.addEventListener('input', () => render());
+fn.addEventListener('change', () => render());
 strokeColor.addEventListener('input', () => render());
 strokeWidth.addEventListener('input', () => render());
 zoom.addEventListener('input', () => render());
