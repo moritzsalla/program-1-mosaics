@@ -39,6 +39,15 @@ const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
 const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 document.body.appendChild(svg);
 
+// track mouse position
+let mouseDown = false;
+window.addEventListener('mousedown', function () {
+    mouseDown = true;
+});
+window.addEventListener('mouseup', function () {
+    mouseDown = false;
+});
+
 function render() {
     svg.innerHTML = ''; // important: clear parent elem on every draw
     errorUI.remove();
@@ -68,6 +77,13 @@ function render() {
                 errorUI.create('There is a mistake in your function. Try something else.');
             }
             svg.appendChild(rect);
+
+            rect.addEventListener('click', function () {
+                this.remove();
+            });
+            rect.addEventListener('mouseover', function () {
+                if (mouseDown) this.remove();
+            });
         }
     }
 }
