@@ -1,10 +1,10 @@
 import '98.css/dist/98.css';
-import { setFill } from 'src/math/fill';
-import { detail, seed } from 'src/math/simplexNoise';
-import { rgbToHex } from 'src/utils/colorConverter';
-import { dragElement } from 'src/utils/draggeable';
-import { ErrorUI } from 'src/utils/errorUI';
-import { save } from 'src/utils/svg-helpers';
+import { setFill } from './utils/sanetize';
+import { detail, seed } from './math/simplex';
+import { rgbToHex } from './utils/color';
+import { dragElement } from './utils/interaction';
+import { ErrorUI } from './ErrorUI';
+import { save } from './utils/svg';
 
 const zoom = document.getElementById('zoom') as HTMLInputElement;
 const height = document.getElementById('height') as HTMLInputElement;

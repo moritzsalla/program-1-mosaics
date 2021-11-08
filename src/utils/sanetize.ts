@@ -1,6 +1,6 @@
-import { map } from 'src/math/map';
-import { noise } from 'src/math/simplexNoise';
-import { hexToRgb, rgbToHex } from 'src/utils/colorConverter';
+import { hexToRgb, rgbToHex } from './color';
+import { map } from '../math/map';
+import { noise } from '../math/simplex';
 
 const { sin, cos, tan, floor, ceil, round } = Math;
 
