@@ -1,6 +1,6 @@
-import { hexToRgb, rgbToHex } from '../utils/colorConverter';
-import { map } from './map';
-import { noise } from './simplexNoise';
+import { map } from 'src/math/map';
+import { noise } from 'src/math/simplexNoise';
+import { hexToRgb, rgbToHex } from 'src/utils/colorConverter';
 
 const { sin, cos, tan, floor, ceil, round } = Math;
 
@@ -24,7 +24,7 @@ const write = (x: number, y: number, c: number) => {
    return color;
 };
 
-export const fill = (x: number, y: number, hex: string): string => {
+export const setFill = (x: number, y: number, hex: string): string => {
    const r = write(x, y, hexToRgb(hex).r);
    const g = write(x, y, hexToRgb(hex).g);
    const b = write(x, y, hexToRgb(hex).b);

@@ -1,10 +1,10 @@
 import '98.css/dist/98.css';
-import { fill as setFill } from './math/fill';
-import { detail, seed } from './math/simplexNoise';
-import { rgbToHex } from './utils/colorConverter';
-import { dragElement } from './utils/draggeable';
-import { ErrorUI } from './utils/errorUI';
-import { save } from './utils/svg-helpers';
+import { setFill } from 'src/math/fill';
+import { detail, seed } from 'src/math/simplexNoise';
+import { rgbToHex } from 'src/utils/colorConverter';
+import { dragElement } from 'src/utils/draggeable';
+import { ErrorUI } from 'src/utils/errorUI';
+import { save } from 'src/utils/svg-helpers';
 
 const zoom = document.getElementById('zoom') as HTMLInputElement;
 const height = document.getElementById('height') as HTMLInputElement;
@@ -51,13 +51,14 @@ window.addEventListener('mouseup', () => {
    mouseDown = false;
 });
 
+// defaults
+seed(Number(noiseSeed.value));
+detail(Number(noiseDetail.value), Number(noiseFalloff.value));
+
 const render = () => {
    // clear parent elem on every draw
    SVG.innerHTML = '';
    error.remove();
-
-   seed(Number(noiseSeed.value));
-   detail(Number(noiseDetail.value), Number(noiseFalloff.value));
 
    let WIDTH = Number(width.value) * Number(zoom.value);
    let HEIGHT = Number(height.value) * Number(zoom.value);
@@ -99,13 +100,6 @@ const render = () => {
 render();
 
 // --- redraw grid on input change ---
-const addListeners = (elems: HTMLInputElement[], type: string, callback: () => void): void[] => {
-   if (!elems || !type) return;
-   return elems.map((elem) => {
-      elem.addEventListener(type, callback);
-   });
-};
-
 const changeListeners = [height, width];
 const inputListeners = [
    fill,
@@ -119,6 +113,14 @@ const inputListeners = [
    noiseDetail,
    noiseFalloff,
 ];
+
+const addListeners = (elems: HTMLInputElement[], type: string, callback: () => void): void[] => {
+   if (!elems || !type) return;
+   return elems.map((elem) => {
+      elem.addEventListener(type, callback);
+   });
+};
+
 addListeners(changeListeners, 'change', render);
 addListeners(inputListeners, 'input', render);
 
