@@ -1,26 +1,24 @@
 import '98.css/dist/98.css';
-import { calcFill } from './math/calcFill';
+import { fill as setFill } from './math/fill';
 import { detail, seed } from './math/simplexNoise';
 import { rgbToHex } from './utils/colorConverter';
 import { dragElement } from './utils/draggeable';
 import { ErrorUI } from './utils/errorUI';
-import { save } from './utils/saveSvg';
+import { save } from './utils/svg-helpers';
 
-// --- inputs ---
-let zoom = document.getElementById('zoom') as HTMLInputElement;
-let height = document.getElementById('height') as HTMLInputElement;
-let width = document.getElementById('width') as HTMLInputElement;
-let fill = document.getElementById('fill') as HTMLInputElement;
-let fn = document.getElementById('fn') as HTMLInputElement;
-let strokeColor = document.getElementById('strokeColor') as HTMLInputElement;
-let strokeWidth = document.getElementById('strokeWidth') as HTMLInputElement;
-let xOffset = document.getElementById('xOffset') as HTMLInputElement;
-let yOffset = document.getElementById('yOffset') as HTMLInputElement;
-let noiseSeed = document.getElementById('seed') as HTMLInputElement;
-let noiseDetail = document.getElementById('detail') as HTMLInputElement;
-let noiseFalloff = document.getElementById('falloff') as HTMLInputElement;
+const zoom = document.getElementById('zoom') as HTMLInputElement;
+const height = document.getElementById('height') as HTMLInputElement;
+const width = document.getElementById('width') as HTMLInputElement;
+const fill = document.getElementById('fill') as HTMLInputElement;
+const fn = document.getElementById('fn') as HTMLInputElement;
+const strokeColor = document.getElementById('strokeColor') as HTMLInputElement;
+const strokeWidth = document.getElementById('strokeWidth') as HTMLInputElement;
+const xOffset = document.getElementById('xOffset') as HTMLInputElement;
+const yOffset = document.getElementById('yOffset') as HTMLInputElement;
+const noiseSeed = document.getElementById('seed') as HTMLInputElement;
+const noiseDetail = document.getElementById('detail') as HTMLInputElement;
+const noiseFalloff = document.getElementById('falloff') as HTMLInputElement;
 
-// --- default values ---
 fill.value = '#FF0000';
 height.value = String(Math.round(window.innerWidth * 0.05));
 width.value = String(Math.round(window.innerWidth * 0.05));
@@ -34,76 +32,95 @@ noiseSeed.value = String(99);
 noiseDetail.value = String(1);
 noiseFalloff.value = String(0.9);
 
-const errorUI = new ErrorUI(document.getElementById('fn'), 'span', 'err');
+const error = new ErrorUI(document.getElementById('fn'), 'span', 'err');
 
-const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-document.body.appendChild(svg);
+const SVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+document.body.appendChild(SVG);
+
+const setBGColor = () => {
+   document.body.style.backgroundColor = bg.value;
+};
 
 // track mouse position
 let mouseDown = false;
-window.addEventListener('mousedown', function () {
-    mouseDown = true;
+
+window.addEventListener('mousedown', () => {
+   mouseDown = true;
 });
-window.addEventListener('mouseup', function () {
-    mouseDown = false;
+window.addEventListener('mouseup', () => {
+   mouseDown = false;
 });
 
-function render() {
-    svg.innerHTML = ''; // important: clear parent elem on every draw
-    errorUI.remove();
+const render = () => {
+   // clear parent elem on every draw
+   SVG.innerHTML = '';
+   error.remove();
 
-    seed(Number(noiseSeed.value));
-    detail(Number(noiseDetail.value), Number(noiseFalloff.value));
+   seed(Number(noiseSeed.value));
+   detail(Number(noiseDetail.value), Number(noiseFalloff.value));
 
-    let WIDTH = Number(width.value) * Number(zoom.value);
-    let HEIGHT = Number(height.value) * Number(zoom.value);
-    svg.style.width = String(WIDTH);
-    svg.style.height = String(HEIGHT);
+   let WIDTH = Number(width.value) * Number(zoom.value);
+   let HEIGHT = Number(height.value) * Number(zoom.value);
 
-    svg.setAttribute('viewBox', `0 0 ${WIDTH + 2} ${HEIGHT + 2}`);
+   SVG.style.width = String(WIDTH);
+   SVG.style.height = String(HEIGHT);
 
-    for (let x = 1; x < WIDTH; x += WIDTH / Number(xOffset.value)) {
-        for (let y = 1; y < HEIGHT; y += HEIGHT / Number(yOffset.value)) {
-            let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-            rect.setAttribute('x', String(x));
-            rect.setAttribute('y', String(y));
-            rect.setAttribute('width', String(WIDTH / Number(xOffset.value)));
-            rect.setAttribute('height', String(HEIGHT / Number(yOffset.value)));
-            rect.setAttribute('stroke', strokeColor.value);
-            rect.setAttribute('stroke-width', strokeWidth.value);
-            try {
-                rect.setAttribute('fill', calcFill(x, y, fill.value));
-            } catch {
-                errorUI.create('There is a mistake in your function. Try something else.');
-            }
-            svg.appendChild(rect);
+   SVG.setAttribute('viewBox', `0 0 ${WIDTH + 2} ${HEIGHT + 2}`);
 
-            rect.addEventListener('click', function () {
-                this.remove();
-            });
-            rect.addEventListener('mouseover', function () {
-                if (mouseDown) this.remove();
-            });
-        }
-    }
-}
+   for (let x = 1; x < WIDTH; x += WIDTH / Number(xOffset.value)) {
+      for (let y = 1; y < HEIGHT; y += HEIGHT / Number(yOffset.value)) {
+         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 
-// --- draw first frame ---
+         rect.setAttribute('x', String(x));
+         rect.setAttribute('y', String(y));
+         rect.setAttribute('width', String(WIDTH / Number(xOffset.value)));
+         rect.setAttribute('height', String(HEIGHT / Number(yOffset.value)));
+         rect.setAttribute('stroke', strokeColor.value);
+         rect.setAttribute('stroke-width', strokeWidth.value);
+
+         try {
+            rect.setAttribute('fill', setFill(x, y, fill.value));
+         } catch {
+            error.create('There is a mistake in your function. Try something else.');
+         }
+
+         SVG.appendChild(rect);
+
+         rect.addEventListener('click', function () {
+            this.remove();
+         });
+
+         rect.addEventListener('mouseover', function () {
+            if (mouseDown) this.remove();
+         });
+      }
+   }
+};
 render();
 
 // --- redraw grid on input change ---
-height.addEventListener('change', () => render());
-width.addEventListener('change', () => render());
-fill.addEventListener('input', () => render());
-fn.addEventListener('input', () => render());
-strokeColor.addEventListener('input', () => render());
-strokeWidth.addEventListener('input', () => render());
-zoom.addEventListener('input', () => render());
-xOffset.addEventListener('input', () => render());
-yOffset.addEventListener('input', () => render());
-noiseDetail.addEventListener('input', () => render());
-noiseSeed.addEventListener('input', () => render());
-noiseFalloff.addEventListener('input', () => render());
+const addListeners = (elems: HTMLInputElement[], type: string, callback: () => void): void[] => {
+   if (!elems || !type) return;
+   return elems.map((elem) => {
+      elem.addEventListener(type, callback);
+   });
+};
+
+const changeListeners = [height, width];
+const inputListeners = [
+   fill,
+   fn,
+   strokeColor,
+   strokeWidth,
+   xOffset,
+   yOffset,
+   zoom,
+   noiseSeed,
+   noiseDetail,
+   noiseFalloff,
+];
+addListeners(changeListeners, 'change', render);
+addListeners(inputListeners, 'input', render);
 
 // --- set background color ---
 let bg = document.getElementById('bg') as HTMLInputElement;
@@ -111,13 +128,9 @@ bg.value = rgbToHex(30, 30, 30);
 bg.addEventListener('input', () => setBGColor());
 setBGColor();
 
-function setBGColor() {
-    document.body.style.backgroundColor = bg.value;
-}
-
 // --- make UI draggeable ---
 dragElement(document.querySelector('.title-bar'), document.querySelector('.window'));
 
-// --- download button ---#
+// --- download button ---
 const downloadButton = document.getElementById('download');
-downloadButton.onclick = () => save(svg, 'gengrid');
+downloadButton.onclick = () => save(SVG, 'gengrid');

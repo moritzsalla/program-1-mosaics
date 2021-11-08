@@ -1,49 +1,49 @@
 /**
- * Makes a HTML Element draggeable
- * @param elemnt - Element that registers drag
- * @param parent - Element to be moved
+ * makes a html element draggeable
+ * @param elemnt {HTMLElement} - element registering drag
+ * @param parent {HTMLElement} - element to be moved
+ * @returns {void}
  */
+export const dragElement = (elem: HTMLElement, parent: HTMLElement): void => {
+   const dragMouseDown = (e) => {
+      e = e || window.event;
+      e.preventDefault();
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      document.onmousemove = elementDrag;
+   };
 
-export function dragElement(elmnt: HTMLElement, parent: HTMLElement): void {
-    var pos1 = 0,
-        pos2 = 0,
-        pos3 = 0,
-        pos4 = 0;
-    if (document.getElementById(elmnt.id + 'header')) {
-        document.getElementById(elmnt.id + 'header').onmousedown = dragMouseDown;
-    } else {
-        elmnt.onmousedown = dragMouseDown;
-    }
+   const elementDrag = (e) => {
+      e = e || window.event;
+      e.preventDefault();
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
 
-    function dragMouseDown(e) {
-        e = e || window.event;
-        e.preventDefault();
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-    }
+      // if parent elem exists, drag this instead of input elem (prevents form input otherwise)
+      if (parent) {
+         parent.style.top = parent.offsetTop - pos2 + 'px';
+         parent.style.left = parent.offsetLeft - pos1 + 'px';
+      } else {
+         elem.style.top = elem.offsetTop - pos2 + 'px';
+         elem.style.left = elem.offsetLeft - pos1 + 'px';
+      }
+   };
 
-    function elementDrag(e) {
-        e = e || window.event;
-        e.preventDefault();
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+   const closeDragElement = () => {
+      document.onmouseup = null;
+      document.onmousemove = null;
+   };
 
-        // if parent elem exists, drag this instead of input elem (prevents form input otherwise)
-        if (parent) {
-            parent.style.top = parent.offsetTop - pos2 + 'px';
-            parent.style.left = parent.offsetLeft - pos1 + 'px';
-        } else {
-            elmnt.style.top = elmnt.offsetTop - pos2 + 'px';
-            elmnt.style.left = elmnt.offsetLeft - pos1 + 'px';
-        }
-    }
-
-    function closeDragElement() {
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
-}
+   let pos1 = 0,
+      pos2 = 0,
+      pos3 = 0,
+      pos4 = 0;
+   if (document.getElementById(elem.id + 'header')) {
+      document.getElementById(elem.id + 'header').onmousedown = dragMouseDown;
+   } else {
+      elem.onmousedown = dragMouseDown;
+   }
+};

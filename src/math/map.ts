@@ -11,13 +11,17 @@
  * @param  {Number} stop1  upper bound of the value's current range
  * @param  {Number} start2 lower bound of the value's target range
  * @param  {Number} stop2  upper bound of the value's target range
- * @param  {Boolean} [withinBounds] constrain the value to the newly mapped range
  * @return {Number}        remapped number
  * @alt
  * 10 by 10 white ellipse with in mid left canvas
  * 2 25 by 25 white ellipses move with mouse x. Bottom has more range from X
  */
-
-export function map(n: number, start1: number, stop1: number, start2: number, stop2: number) {
-    return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
-}
+export const map = (
+   n: number,
+   start1: number,
+   stop1: number,
+   start2: number,
+   stop2: number
+): number => {
+   return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
+};

@@ -11,8 +11,3 @@ The grid tool gives you access through the x axis, y axis, color, and various fu
 Generate your own designs here: https://grid-tool-vanilla.vercel.app. Be careful while exporting large and details patterns, they can get more complex than your vector program can handle 💣
 
 ![Scarf](downloads/sketch.png)
-
-
-![Scarf](downloads/gengrid2.jpg)
-
-![Scarf](downloads/gengrid.jpg)
