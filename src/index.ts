@@ -116,16 +116,18 @@ const inputListeners = [
 
 const addListeners = (elems: HTMLInputElement[], type: string, callback: () => void): void[] => {
    if (!elems || !type) return;
-   return elems.map((elem) => {
+
+   const addListener = (elem: HTMLInputElement): void => {
       elem.addEventListener(type, callback);
-   });
+   };
+   return elems.map(addListener);
 };
 
 addListeners(changeListeners, 'change', render);
 addListeners(inputListeners, 'input', render);
 
 // --- set background color ---
-let bg = document.getElementById('bg') as HTMLInputElement;
+const bg = document.getElementById('bg') as HTMLInputElement;
 bg.value = rgbToHex(30, 30, 30);
 bg.addEventListener('input', () => setBGColor());
 setBGColor();
