@@ -1,6 +1,7 @@
 /**
- * surfaces errors to the user
- * use "span#err" for styling
+ * @class ErrorUI
+ * @description Surfaces errors to the user.
+ * @note Use "span#err" for styling.
  */
 export class ErrorUI {
    elem: HTMLSpanElement;
@@ -9,10 +10,9 @@ export class ErrorUI {
    type?: string;
 
    /**
-    * @param {HTMLElement} parent parent DOM element
-    * @param {string} type type of DOM element type the error should be, ex. span, h1, p, etc.
-    * @param {string} id add an ID for styling
-    * @returns {ErrorUI}
+    * @param parent parent DOM element
+    * @param type type of DOM element type the error should be, ex. span, h1, p, etc.
+    * @param id add an ID for styling
     */
    constructor(parent: HTMLElement, type?: string, id?: string) {
       this.elem = null;
@@ -22,19 +22,24 @@ export class ErrorUI {
    }
 
    create(text: string) {
-      if (!this.elem) {
-         this.elem = document.createElement(this.type);
-         const newContent = document.createTextNode(String(text));
+      if (this.elem) return;
 
-         this.elem.appendChild(newContent);
-         this.parent.parentNode.insertBefore(this.elem, this.parent.nextSibling);
+      this.elem = document.createElement(this.type);
+      const newContent = document.createTextNode(String(text));
 
-         if (this.assignedID) this.elem.id = this.assignedID;
+      this.elem.appendChild(newContent);
+      this.parent.parentNode.insertBefore(this.elem, this.parent.nextSibling);
+
+      if (this.assignedID) {
+         this.elem.id = this.assignedID;
       }
    }
 
    remove() {
-      if (this.elem) this.elem.parentNode.removeChild(this.elem);
+      if (this.elem) {
+         this.elem.parentNode.removeChild(this.elem);
+      }
+
       this.elem = null;
    }
 }

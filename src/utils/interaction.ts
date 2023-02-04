@@ -1,8 +1,7 @@
 /**
- * makes a html element draggeable
- * @param elemnt {HTMLElement} - element registering drag
- * @param parent {HTMLElement} - element to be moved
- * @returns {void}
+ * makes a html element draggable
+ * @param element - element registering drag
+ * @param parent - element to be moved
  */
 export const dragElement = (elem: HTMLElement, parent: HTMLElement): void => {
    const dragMouseDown = (e) => {

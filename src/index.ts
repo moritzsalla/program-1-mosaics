@@ -1,5 +1,5 @@
 import '98.css/dist/98.css';
-import { setFill } from './utils/sanetize';
+import { setFill } from './utils/sanitize';
 import { detail, seed } from './math/simplex';
 import { rgbToHex } from './utils/color';
 import { dragElement } from './utils/interaction';
@@ -60,8 +60,8 @@ const render = () => {
    SVG.innerHTML = '';
    error.remove();
 
-   let WIDTH = Number(width.value) * Number(zoom.value);
-   let HEIGHT = Number(height.value) * Number(zoom.value);
+   const WIDTH = Number(width.value) * Number(zoom.value);
+   const HEIGHT = Number(height.value) * Number(zoom.value);
 
    SVG.style.width = String(WIDTH);
    SVG.style.height = String(HEIGHT);
