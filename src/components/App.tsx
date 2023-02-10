@@ -5,20 +5,34 @@ import InputPanel from './shared/inputPanel';
 
 import styles from './App.module.css';
 
-const App = () => {
+const DataWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <TransitionProvider>
-      <GridConfigProvider>
-        <div className={styles.layout}>
-          <div className={styles.layoutPanel}>
-            <InputPanel />
-          </div>
-          <div className={styles.layoutPanel}>
-            <Grid />
-          </div>
-        </div>
-      </GridConfigProvider>
+      <GridConfigProvider>{children}</GridConfigProvider>
     </TransitionProvider>
+  );
+};
+
+const Layout = ({
+  renderLeft,
+  renderRight,
+}: {
+  renderLeft: React.ReactNode;
+  renderRight: React.ReactNode;
+}) => {
+  return (
+    <div className={styles.layout}>
+      <div className={styles.layoutPanel}>{renderLeft}</div>
+      <div className={styles.layoutPanel}>{renderRight}</div>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <DataWrapper>
+      <Layout renderLeft={<InputPanel />} renderRight={<Grid />} />
+    </DataWrapper>
   );
 };
 
