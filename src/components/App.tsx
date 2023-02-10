@@ -1,37 +1,25 @@
-import { useTransition } from 'react';
-import './App.css';
 import Grid from './primitives/grid';
-import GridConfigProvider, {
-  GridActions,
-  useGridConfigDispatch,
-} from './primitives/grid/GridConfigProvider';
+import GridConfigProvider from './providers/ConfigProvider';
+import TransitionProvider from './providers/TransitionProvider';
+import InputPanel from './shared/inputPanel';
+
+import styles from './App.module.css';
 
 const App = () => {
-  const dispatch = useGridConfigDispatch();
-
-  const [isPending, transition] = useTransition();
-
   return (
-    <div className='App'>
-      <DataWrapper>
-        <input
-          type='slider'
-          min={1}
-          max={10}
-          onChange={(e) => {
-            transition(() =>
-              dispatch({ type: GridActions.reset, payload: null })
-            );
-          }}
-        />
-        {!isPending && <Grid />}
-      </DataWrapper>
-    </div>
+    <TransitionProvider>
+      <GridConfigProvider>
+        <div className={styles.layout}>
+          <div className={styles.layoutPanel}>
+            <InputPanel />
+          </div>
+          <div className={styles.layoutPanel}>
+            <Grid />
+          </div>
+        </div>
+      </GridConfigProvider>
+    </TransitionProvider>
   );
-};
-
-const DataWrapper = ({ children }: { children: React.ReactNode }) => {
-  return <GridConfigProvider>{children}</GridConfigProvider>;
 };
 
 export default App;

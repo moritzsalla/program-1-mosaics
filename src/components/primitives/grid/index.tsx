@@ -1,55 +1,49 @@
+import { useConfigState } from 'components/providers/ConfigProvider';
+import { useAppTransition } from 'components/providers/TransitionProvider';
 import { useMemo } from 'react';
-import { useGridConfigState } from './GridConfigProvider';
+
+import styles from './index.module.css';
 
 const Grid = () => {
+  const [isTransitioning] = useAppTransition() || [];
   const {
-    resolution: [resolutionX, resolutionY],
-    dimensions: [gridWidth, gridHeight],
-  } = useGridConfigState();
+    resolution: [resolutionX, resolutionY] = [0, 0],
+    dimensions: [gridWidth, gridHeight] = [0, 0],
+  } = useConfigState() || {};
 
   const columns = useMemo(() => {
-    return gridWidth / resolutionX;
+    return Math.round(gridWidth / resolutionX);
   }, [gridWidth, resolutionX]);
 
   const rows = useMemo(() => {
-    return gridHeight / resolutionY;
+    return Math.round(gridHeight / resolutionY);
   }, [gridHeight, resolutionY]);
 
   return (
-    <GridContainer>
-      {[...new Array(columns)].map((_, columnIndex) => {
-        return [...new Array(rows)].map((_, rowIndex) => (
-          <div
-            key={`grid_item-column${columnIndex}-row${rowIndex}`}
-            style={{
-              outline: 'thin solid white',
-              width: resolutionX,
-              height: resolutionY,
-            }}
-          />
-        ));
-      })}
-    </GridContainer>
-  );
-};
-
-const GridContainer = ({ children }: { children: React.ReactNode }) => {
-  const {
-    dimensions: [gridWidth, gridHeight],
-  } = useGridConfigState();
-
-  return (
     <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        width: gridWidth,
-        height: gridHeight,
-        outline: 'thin solid red',
-      }}
+      className={styles.loadingContainer}
+      style={{ opacity: isTransitioning ? 0.5 : 1 }}
     >
-      {children}
+      <div
+        className={styles.gridContainer}
+        style={{
+          width: gridWidth,
+          height: gridHeight,
+        }}
+      >
+        {[...new Array(columns)].map((_, columnIndex) => {
+          return [...new Array(rows)].map((_, rowIndex) => (
+            <div
+              key={`grid_item-column${columnIndex}-row${rowIndex}`}
+              className={styles.gridItem}
+              style={{
+                width: resolutionX,
+                height: resolutionY,
+              }}
+            />
+          ));
+        })}
+      </div>
     </div>
   );
 };
