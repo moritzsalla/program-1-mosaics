@@ -4,29 +4,37 @@ import { noise } from '../math/simplex';
 
 const { sin, cos, tan, floor, ceil, round } = Math;
 
-const write = (x: number, y: number, c: number) => {
-   let color = new Function(
-      'x',
-      'y',
-      'c',
-      'noise',
-      'sin',
-      'cos',
-      'tan',
-      'floor',
-      'ceil',
-      'round',
-      `return ${fn.value}`
-   )(x, y, c, noise, sin, cos, tan, floor, ceil, round);
+const writeColor = (x: number, y: number, c: number) => {
+   try {
+      let color = new Function(
+         'x',
+         'y',
+         'c',
+         'noise',
+         'sin',
+         'cos',
+         'tan',
+         'floor',
+         'ceil',
+         'round',
+         `return ${fn.value}`
+      )(x, y, c, noise, sin, cos, tan, floor, ceil, round);
 
-   color = map(color, 0, 1, 0, 255);
-   color = round(color);
-   return color;
+      color = map(color, 0, 1, 0, 255);
+      color = round(color);
+
+      return color;
+   } catch (error) {
+      console.error('Failed to write color', error);
+
+      return 0;
+   }
 };
 
 export const setFill = (x: number, y: number, hex: string): string => {
-   const r = write(x, y, hexToRgb(hex).r);
-   const g = write(x, y, hexToRgb(hex).g);
-   const b = write(x, y, hexToRgb(hex).b);
+   const r = writeColor(x, y, hexToRgb(hex).r);
+   const g = writeColor(x, y, hexToRgb(hex).g);
+   const b = writeColor(x, y, hexToRgb(hex).b);
+
    return rgbToHex(r, g, b);
 };

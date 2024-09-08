@@ -1,14 +1,10 @@
+import { PROGRAM_ELEMENT_REGISTRY } from '../config';
+
 const componentToHex = (c: number): string => {
    const hex = c.toString(16);
    return hex.length === 1 ? '0' + hex : hex;
 };
 
-/**
- * rgb to hex
- * @param {number} r red
- * @param {number} g green
- * @param {number} b blue
- */
 export const rgbToHex = (r: number, g: number, b: number) => {
    const _r = componentToHex(r);
    const _g = componentToHex(g);
@@ -16,15 +12,6 @@ export const rgbToHex = (r: number, g: number, b: number) => {
    return '#' + _r + _g + _b;
 };
 
-/**
- * hex to rgb
- * @param hex - hex color
- * @returns {
- *  r: number,
- *  g: number,
- *  b: number
- * } rgb color
- */
 export const hexToRgb = (hex: string): { r: number; g: number; b: number } => {
    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
    if (!result) return null;
@@ -33,4 +20,8 @@ export const hexToRgb = (hex: string): { r: number; g: number; b: number } => {
       g: parseInt(result[2], 16),
       b: parseInt(result[3], 16),
    };
+};
+
+export const setBackgroundColor = () => {
+   document.body.style.backgroundColor = PROGRAM_ELEMENT_REGISTRY.bg.value;
 };
