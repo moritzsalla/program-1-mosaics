@@ -1,4 +1,4 @@
-# Generative SVG Grid Tool
+Program 1.0 (Perlin)
 
 ![Thumbnail](bin/img2.png)
 
