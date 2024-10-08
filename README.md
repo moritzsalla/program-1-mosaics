@@ -1,5 +1,7 @@
 Program 1.0 (perlin mosaics)
 
+- 98.css
+
 ![Thumbnail](bin/img2.png)
 
 ![Thumbnail](bin/img1.png)
