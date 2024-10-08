@@ -1,4 +1,4 @@
-Program 1.0 (Perlin)
+Program 1.0 (perlin mosaics)
 
 ![Thumbnail](bin/img2.png)
 
